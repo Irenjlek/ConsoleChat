@@ -7,4 +7,5 @@ User::User(std::string name, std::string login, std::string password):
 std::ostream& operator<< (std::ostream& os, User& us)
 {
 	os << us._name;
+	return os;
 }
