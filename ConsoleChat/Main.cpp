@@ -11,10 +11,6 @@ bool main() {
 	chat->createNewUser("Irina", "Irina", "23456");
 	chat->createNewUser("Elena", "Elena", "35467");
 
-	for (User user : chat->_users) {
-		std::cout << user.getLogin() << " ";
-	}
-
 	delete chat;
 	return 0;
 }

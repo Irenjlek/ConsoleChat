@@ -17,6 +17,6 @@ public:
 	std::string getSender();
 	std::string getRecipient();
 	time_t getTime();
-	friend std::ostream& operator<< (std::ostream&, Message&);
+	friend std::ostream& operator<< (std::ostream& stream, Message& message);
 };
 
