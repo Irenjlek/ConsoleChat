@@ -1,4 +1,5 @@
 #include "Message.h"
+#include <ostream>
 
 Message::Message(std::string text, std::string sender, std::string recipient, time_t time) :
 	_text(text),
@@ -28,7 +29,8 @@ time_t Message::getTime()
 	return _time;
 }
 
-std::ostream& operator<<(std::ostream&, Message&)
+std::ostream& operator<<(std::ostream& stream, Message& message)
 {
-	// TODO: вставьте здесь оператор return
+	stream << message._text;
+	return stream;
 }
