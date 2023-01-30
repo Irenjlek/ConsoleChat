@@ -9,8 +9,8 @@
 class Chat
 {
 private:
-	std::vector<User*> _users;
-	std::vector <Message> _messeges;
+	std::vector<std::shared_ptr <User>> _users;
+	std::vector<std::shared_ptr <Message>> _messages;
 	std::shared_ptr <User> _activeUser;
 
 
@@ -24,7 +24,7 @@ public:
 	bool login(std::string login, std::string password);
 	void write(std::string text, std::shared_ptr<User>&);
 	void writeToAll(std::string text);
-	std::shared_ptr <User> getActiveUser(const std::vector<User*>&);
+	std::shared_ptr <User> getActiveUser();
 	std::shared_ptr <User> getUser(const std::vector<User>&);
 	void showMenuAddUser();
 	void showMenuAddMessege();
@@ -37,7 +37,7 @@ public:
 
 	void showAll() {
 		std::cout << "showall" << std::endl;
-		for (User* user : _users)
+		for (std::shared_ptr <User> user : _users)
 		{
 			std::cout << user->getName() << " " << std::endl;
 		}

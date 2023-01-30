@@ -14,7 +14,7 @@ Chat::~Chat()
 bool Chat::createNewUser(const std::string& name, const std::string& login, const std::string& password)
 {
 
-	for (User* user : _users)
+	for (std::shared_ptr <User> user : _users)
 
 	{
 		if (user->getLogin() == login) {
@@ -22,9 +22,9 @@ bool Chat::createNewUser(const std::string& name, const std::string& login, cons
 			return false;
 		}
 	}
-	User* newUser = new User(name, login, password);
+	std::shared_ptr <User> newUser = std::shared_ptr <User>(new User(name, login, password));
 	_users.push_back(newUser);
-	setActiveUser(std::make_shared<User>(*newUser));
+	setActiveUser(newUser);
 
 	return true;
 }
@@ -36,9 +36,11 @@ void Chat::setActiveUser(const std::shared_ptr<User>& user)
 
 bool Chat::login(std::string login, std::string password)
 {
-	for (User* user : _users)
+	bool found = false;
+	for (std::shared_ptr <User> user : _users)
 	{
 		if (user->getLogin() == login) {
+			found = true;
 			if (user->getPassword() == password) {
 				setActiveUser(std::make_shared<User>(*user));
 			}
@@ -48,7 +50,9 @@ bool Chat::login(std::string login, std::string password)
 			}
 		}
 	}
-	return true;
+	if (!found)
+		std::cout << "User with login " << login << " does not exist." << std::endl;
+	return found;
 }
 
 
@@ -56,9 +60,9 @@ void Chat::write(std::string text, std::shared_ptr<User>& recipient)
 {
 	time_t time_mess = time(&time_mess);		
 	
-	std::shared_ptr <Message> shp_mess(new Message(text, getActiveUser(_users).get()->getName(), 
-		                                         recipient.get()->getName(), time_mess));	
-	_messeges.push_back(*shp_mess);	
+	std::shared_ptr <Message> shp_mess(new Message(text, getActiveUser().get()->getName(),
+		recipient.get()->getName(), time_mess));
+	_messages.push_back(shp_mess);	
 	
 }
 
@@ -69,11 +73,16 @@ void Chat::writeToAll(std::string text)
 	
 	for (auto ricipient : _users)
 	{
-		std::shared_ptr <Message> shp_mess(new Message(text, getActiveUser(_users).get()->getName(),
-			                               (*ricipient).getName(), time_mess));
-		_messeges.push_back(*shp_mess);
+		std::shared_ptr <Message> shp_mess(new Message(text, getActiveUser().get()->getName(),
+			(*ricipient).getName(), time_mess));
+		_messages.push_back(shp_mess);
 	}
 	
+}
+
+std::shared_ptr<User> Chat::getActiveUser()
+{
+	return _activeUser;
 }
 
 void Chat::showMenuAddMessege()

@@ -5,6 +5,8 @@
 
 int main() {
 	Chat *chat = new Chat();
+
+
 	std::cout << "create---------------" << std::endl;
 	chat->createNewUser("Irina", "Irina", "12345");
 	chat->createNewUser("Roman", "Roman", "67890");
@@ -20,6 +22,10 @@ int main() {
 
 	chat->login("Irina", "12345");
 	std::cout << "show2-------" << std::endl;
+	chat->showActive();
+
+	chat->login("Anton", "12345");
+	std::cout << "show3-------" << std::endl;
 	chat->showActive();
 
 
