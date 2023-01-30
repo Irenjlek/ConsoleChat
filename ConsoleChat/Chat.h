@@ -13,7 +13,9 @@ private:
 	std::vector <Message> _messeges;
 	std::shared_ptr <User> _activeUser;
 
-public:	
+
+public:
+
 	Chat();
 	~Chat();
 
@@ -22,7 +24,7 @@ public:
 	bool login(std::string login, std::string password);
 	void write(std::string text, std::shared_ptr<User>&);
 	void writeToAll(std::string text);
-	std::shared_ptr <User> getActiveUser(const std::vector<User>&);
+	std::shared_ptr <User> getActiveUser(const std::vector<User*>&);
 	std::shared_ptr <User> getUser(const std::vector<User>&);
 	void showMenuAddUser();
 	void showMenuAddMessege();
@@ -41,4 +43,5 @@ public:
 		}
 	}
 };
+
 
