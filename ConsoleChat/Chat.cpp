@@ -13,15 +13,10 @@ Chat::~Chat()
 
 bool Chat::createNewUser(const std::string& name, const std::string& login, const std::string& password)
 {
-
-	for (std::shared_ptr <User> user : _users)
-
-	{
-		if (user->getLogin() == login) {
-			std::cout << "User with login " << login << " is already exists." << std::endl;
-			return false;
-		}
-	}
+	if (isLoginExist(login)) {
+		std::cout << "User with login " << login << " is already exists." << std::endl;
+		return false;
+	}		
 	std::shared_ptr <User> newUser = std::shared_ptr <User>(new User(name, login, password));
 	_users.push_back(newUser);
 	setActiveUser(newUser);
@@ -31,16 +26,21 @@ bool Chat::createNewUser(const std::string& name, const std::string& login, cons
 
 void Chat::setActiveUser(const std::shared_ptr<User>& user)
 {
+	std::cout << "Hello, " << user->getName() << "! Nice to see you!" << std::endl;
 	_activeUser = user;
 }
 
 bool Chat::login(std::string login, std::string password)
 {
-	bool found = false;
+	bool found = isLoginExist(login);
+	if (!found) {
+		std::cout << "User with login " << login << " does not exist." << std::endl;
+		return false;
+	}
+
 	for (std::shared_ptr <User> user : _users)
 	{
 		if (user->getLogin() == login) {
-			found = true;
 			if (user->getPassword() == password) {
 				setActiveUser(std::make_shared<User>(*user));
 			}
@@ -50,9 +50,7 @@ bool Chat::login(std::string login, std::string password)
 			}
 		}
 	}
-	if (!found)
-		std::cout << "User with login " << login << " does not exist." << std::endl;
-	return found;
+	return true;
 }
 
 
@@ -78,6 +76,16 @@ void Chat::writeToAll(std::string text)
 		_messages.push_back(shp_mess);
 	}
 	
+}
+
+bool Chat::isLoginExist(const std::string& login)
+{
+	for (std::shared_ptr <User> user : _users)
+	{
+		if (user->getLogin() == login) 			
+			return true;
+	}
+	return false;
 }
 
 std::shared_ptr<User> Chat::getActiveUser()
