@@ -70,7 +70,7 @@ void Chat::writeToAll(std::string text)
 	for (auto ricipient : _users)
 	{
 		std::shared_ptr <Message> shp_mess(new Message(text, getActiveUser(_users).get()->getName(),
-			(*ricipient).getName(), time_mess));
+			                               (*ricipient).getName(), time_mess));
 		_messeges.push_back(*shp_mess);
 	}
 	

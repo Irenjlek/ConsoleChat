@@ -22,6 +22,10 @@ int main() {
 	std::cout << "show2-------" << std::endl;
 	chat->showActive();
 
+
+	
+	
+
 	delete chat;
 	return 0;
 }
