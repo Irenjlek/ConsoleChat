@@ -60,8 +60,8 @@ void Chat::write(std::string text, std::shared_ptr<User>& recipient)
 {
 	time_t time_mess = time(&time_mess);		
 	
-	std::shared_ptr <Message> shp_mess(new Message(text, getActiveUser().get()->getName(),
-		recipient.get()->getName(), time_mess));
+	std::shared_ptr <Message> shp_mess(new Message(text, getActiveUser()->getName(),
+		                                           recipient->getName(), time_mess));
 	_messages.push_back(shp_mess);	
 	
 }
@@ -73,8 +73,8 @@ void Chat::writeToAll(std::string text)
 	
 	for (auto ricipient : _users)
 	{
-		std::shared_ptr <Message> shp_mess(new Message(text, getActiveUser().get()->getName(),
-			(*ricipient).getName(), time_mess));
+		std::shared_ptr <Message> shp_mess(new Message(text, getActiveUser()->getName(),
+			                                            ricipient->getName(), time_mess));
 		_messages.push_back(shp_mess);
 	}
 	
@@ -90,3 +90,11 @@ void Chat::showMenuAddMessege()
 	std::cout << "¬ыберите режим получател€ : 1 - одному , 2 - всем (All) \n";
 }
 
+std::shared_ptr <User> Chat::getUser(std::string login)
+{
+	for (auto user : _users)
+		if (user->getLogin() == login)
+			return user;
+		else return std::make_unique <User>();
+
+}

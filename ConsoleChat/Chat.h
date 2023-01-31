@@ -25,7 +25,7 @@ public:
 	void write(std::string text, std::shared_ptr<User>&);
 	void writeToAll(std::string text);
 	std::shared_ptr <User> getActiveUser();
-	std::shared_ptr <User> getUser(const std::vector<User>&);
+	std::shared_ptr <User> getUser(std::string login);
 	void showMenuAddUser();
 	void showMenuAddMessege();
 
