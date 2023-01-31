@@ -55,6 +55,7 @@ int main() {
 			}			
 			std::cout << "write a message\n";
 			std::getline(std::cin,message);
+			std::cout << std::endl;
 			chat->write(message, chat->getUser(ricipient));
 			std::cout << chat->getActiveUser()->getName() <<std::setw(30) << "--->"<< std::setw(30)
 				<< ricipient << std::endl << std::endl << std::setw(15) << "\" " << message << " \""
@@ -68,6 +69,7 @@ int main() {
 			std::cout << "write a message : \n";
 			std::getline(std::cin,message);			
 			chat->writeToAll(message);
+			std::cout << std::endl;
 			std::cout << chat->getActiveUser()->getName() <<std::setw(30) << "--->" << std::setw(30)
 				<< "All" << std::endl << std::endl << std::setw(15) << "\" " << message << " \""
 				<< std::endl << std::endl;
