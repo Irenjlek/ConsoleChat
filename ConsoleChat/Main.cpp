@@ -44,14 +44,15 @@ int main() {
 		{
 		case '1':		
 		    {
-			std::cout << "Chose the ricipient: \n";
+			std::cout << "You are : " << chat->getActiveUser()->getName() << std::endl;
+			std::cout << "Choîse the ricipient: \n";
 			std::cout << *chat << std::endl;
 			std::getline (std::cin,ricipient);
 			if ((chat->getUser(ricipient)->getLogin()) == "\0")
 			{
 				std::cout << "bad ricipient, try again! \n";
 				continue;
-			}
+			}			
 			std::cout << "write a message\n";
 			std::getline(std::cin,message);
 			chat->write(message, chat->getUser(ricipient));
@@ -63,6 +64,7 @@ int main() {
 
 		case '2':
 		    {
+			std::cout << "You are : " << chat->getActiveUser()->getName() << std::endl;
 			std::cout << "write a message : \n";
 			std::getline(std::cin,message);			
 			chat->writeToAll(message);
