@@ -1,6 +1,7 @@
 #include "Chat.h"
 #include <iostream>
 
+
 Chat::Chat()
 {
 
@@ -56,7 +57,7 @@ bool Chat::login(std::string login, std::string password)
 }
 
 
-void Chat::write(std::string text, std::shared_ptr<User>& recipient)
+void Chat::write(std::string text, std::shared_ptr<User> recipient)
 {
 	time_t time_mess = time(&time_mess);		
 	
@@ -71,7 +72,7 @@ void Chat::writeToAll(std::string text)
 	time_t time_mess = time(&time_mess);
 	
 	
-	for (auto ricipient : _users)
+	for (auto& ricipient : _users)
 	{
 		std::shared_ptr <Message> shp_mess(new Message(text, getActiveUser()->getName(),
 			                                            ricipient->getName(), time_mess));
@@ -87,14 +88,29 @@ std::shared_ptr<User> Chat::getActiveUser()
 
 void Chat::showMenuAddMessege()
 {
-	std::cout << "¬ыберите режим получател€ : 1 - одному , 2 - всем (All) \n";
+	std::cout << "Choose ricipient mode : 1 - to One , 2 - to All, 3 - Exit \n";
 }
 
-std::shared_ptr <User> Chat::getUser(std::string login)
+std::shared_ptr<User> Chat::getUser(std::string login)
 {
-	for (auto user : _users)
-		if (user->getLogin() == login)
-			return user;
-		else return std::make_unique <User>();
+	for (auto& user : _users)
+		if (user->getLogin() == login)				
+			return user;    
+		
+		return std::make_shared <User>();
 
 }
+
+std::ostream& operator<< (std::ostream& os, Chat& ch)
+{
+	int count(0);
+	for (auto& user : ch._users)
+	{		
+		os << std::setw(3) << " < " << *user << " > ";
+		count++;
+		if (!(count % 6))
+			os << std::endl;
+	}
+	return os;
+}
+

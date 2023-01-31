@@ -28,10 +28,71 @@ int main() {
 	std::cout << "show3-------" << std::endl;
 	chat->showActive();
 
+	std::cout << std::endl;		
 
-	
-	
+	bool _true = true;
+	char choose;
+	while (_true)
+	{
+		chat->showMenuAddMessege(); // 1 - One, 2 - All, 3 - Exit	    
+	    std::cin >> choose;
+		while (std::cin.get() != '\n')
+			continue;
+	    std::string message;
+		std::string ricipient;
+		switch (choose)
+		{
+		case '1':		
+		    {
+			std::cout << "Chose the ricipient: \n";
+			std::cout << *chat << std::endl;
+			std::getline (std::cin,ricipient);
+			if ((chat->getUser(ricipient)->getLogin()) == "\0")
+			{
+				std::cout << "bad ricipient, try again! \n";
+				continue;
+			}
+			std::cout << "write a message\n";
+			std::getline(std::cin,message);
+			chat->write(message, chat->getUser(ricipient));
+			std::cout << chat->getActiveUser()->getName() <<std::setw(30) << "--->"<< std::setw(30)
+				<< ricipient << std::endl << std::endl << std::setw(15) << "\" " << message << " \""
+				<< std::endl << std::endl;
+		    }
+			continue;
+
+		case '2':
+		    {
+			std::cout << "write a message : \n";
+			std::getline(std::cin,message);			
+			chat->writeToAll(message);
+			std::cout << chat->getActiveUser()->getName() <<std::setw(30) << "--->" << std::setw(30)
+				<< "All" << std::endl << std::endl << std::setw(15) << "\" " << message << " \""
+				<< std::endl << std::endl;
+		    }
+			continue;
+		
+		case '3':
+		    {
+			std::cout << "Exit! \n";
+			break;
+		    }
+
+		default: std::cout << "bad choose mode, try again! \n";
+			continue;
+		}
+		
+		_true = false;
+	}
+		
+		
+		
+	std::cout << *chat << std::endl;
+    
 
 	delete chat;
+
+	std::cout << "Done!";
+
 	return 0;
 }

@@ -5,6 +5,7 @@
 #include <iostream>
 #include "User.h"
 #include "Message.h"
+#include <iomanip>
 
 class Chat
 {
@@ -22,12 +23,13 @@ public:
 	bool createNewUser(const std::string& name, const std::string& login, const std::string& password);
 	void setActiveUser(const std::shared_ptr<User>& user);
 	bool login(std::string login, std::string password);
-	void write(std::string text, std::shared_ptr<User>&);
+	void write(std::string text, std::shared_ptr<User>);
 	void writeToAll(std::string text);
 	std::shared_ptr <User> getActiveUser();
 	std::shared_ptr <User> getUser(std::string login);
 	void showMenuAddUser();
 	void showMenuAddMessege();
+	friend std::ostream& operator<< (std::ostream& os, Chat&);
 
 	//temp for debug
 	void showActive() {
@@ -41,7 +43,8 @@ public:
 		{
 			std::cout << user->getName() << " " << std::endl;
 		}
-	}
+	}	
+
 };
 
 
