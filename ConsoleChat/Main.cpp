@@ -89,9 +89,11 @@ int main() {
 		_true = false;
 	}
 		
+	chat->showAllUserMesseges(chat->getActiveUser());
 		
-		
-	std::cout << *chat << std::endl;
+	std::cout << std::endl << std::endl;
+	
+	//std::cout << *chat << std::endl;
     
 
 	delete chat;

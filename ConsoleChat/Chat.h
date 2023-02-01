@@ -29,6 +29,7 @@ public:
 	std::shared_ptr <User> getUser(std::string login);
 	void showMenuAddUser();
 	void showMenuAddMessege();
+	void showAllUserMesseges(std::shared_ptr <User>);
 	friend std::ostream& operator<< (std::ostream& os, Chat&);
 
 	//temp for debug

@@ -31,6 +31,8 @@ time_t Message::getTime()
 
 std::ostream& operator<<(std::ostream& stream, Message& message)
 {
-	stream << message._text;
+	stream << message.getSender() << std::setw(30) << "--->" << std::setw(30)
+		<< message.getRecipient() << std::endl << std::endl << std::setw(15) << "\" " << message.getText() << " \""
+		<< std::endl << std::endl;
 	return stream;
 }

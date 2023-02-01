@@ -74,9 +74,12 @@ void Chat::writeToAll(std::string text)
 	
 	for (auto& ricipient : _users)
 	{
-		std::shared_ptr <Message> shp_mess(new Message(text, getActiveUser()->getName(),
-			                                            ricipient->getName(), time_mess));
-		_messages.push_back(shp_mess);
+		if (ricipient->getLogin() != getActiveUser()->getLogin())
+		{
+			std::shared_ptr <Message> shp_mess(new Message(text, getActiveUser()->getName(),
+				                                         ricipient->getName(), time_mess));
+			_messages.push_back(shp_mess);
+		}
 	}
 	
 }
@@ -99,6 +102,21 @@ std::shared_ptr<User> Chat::getUser(std::string login)
 		
 		return std::make_shared <User>();
 
+}
+
+void Chat::showAllUserMesseges(std::shared_ptr<User> shpu)
+{
+	std::cout << shpu->getName() << ", your all messages are : " << std::endl << std::endl;
+	
+	for (auto& message : _messages)
+	{
+		if (shpu->getLogin() != "\0" && (shpu->getLogin() == message->getSender() ||
+			 shpu->getLogin() == message->getRecipient()))
+			std::cout << *message;
+		else std::cout << "Bad ricipient, choose right ricipient!\n";
+		
+	}
+	
 }
 
 std::ostream& operator<< (std::ostream& os, Chat& ch)
