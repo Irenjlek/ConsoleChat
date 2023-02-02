@@ -2,6 +2,7 @@
 #include "Message.h"
 #include "User.h"
 #include <iostream>
+#include <ctime>
 
 int main() {
 	Chat *chat = new Chat();
@@ -94,10 +95,12 @@ int main() {
 	std::cout << std::endl << std::endl;
 	
 	//std::cout << *chat << std::endl;
-    
+	
 
 	delete chat;
 
+	
+	
 	std::cout << "Done!";
 
 	return 0;

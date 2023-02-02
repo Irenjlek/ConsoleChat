@@ -85,7 +85,7 @@ void Chat::writeToAll(std::string text)
 }
 
 std::shared_ptr<User> Chat::getActiveUser()
-{
+{	
 	return _activeUser;
 }
 
