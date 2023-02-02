@@ -11,15 +11,15 @@ private:
 	std::string _text;
 	std::string _sender;
 	std::string _recipient;
-	time_t _time;
+	std::string _time;
 
 public:
-	Message(std::string text, std::string sender, std::string recipient, time_t time);
+	Message(std::string text, std::string sender, std::string recipient, std::string time);
 
 	std::string getText();
 	std::string getSender();
 	std::string getRecipient();
-	time_t getTime();
+	std::string getTime();
 	friend std::ostream& operator<< (std::ostream& stream, Message& message);
 };
 
