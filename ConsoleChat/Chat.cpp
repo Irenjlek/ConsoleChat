@@ -4,7 +4,7 @@
 
 Chat::Chat()
 {
-
+	_activeUser = nullptr;
 }
 
 Chat::~Chat()
@@ -27,7 +27,8 @@ bool Chat::createNewUser(const std::string& name, const std::string& login, cons
 
 void Chat::setActiveUser(const std::shared_ptr<User>& user)
 {
-	std::cout << "Hello, " << user->getName() << "! Nice to see you!" << std::endl;
+	if (user != nullptr)
+		std::cout << "Hello, " << user->getName() << "! Nice to see you!" << std::endl;
 	_activeUser = user;
 }
 
@@ -51,6 +52,7 @@ bool Chat::login(std::string login, std::string password)
 			}
 		}
 	}
+	showAllUserMesseges(_activeUser);
 	return true;
 }
 
@@ -63,8 +65,7 @@ void Chat::write(std::string text, std::shared_ptr<User> recipient)
 	
 	std::shared_ptr <Message> shp_mess(new Message(text, getActiveUser()->getName(),
 		                                           recipient->getName(), str));
-	_messages.push_back(shp_mess);	
-	
+	_messages.push_back(shp_mess);		
 }
 
 void Chat::writeToAll(std::string text)
@@ -73,16 +74,15 @@ void Chat::writeToAll(std::string text)
 	char str[26];
 	ctime_s(str, sizeof str, &result);	
 	
-	for (auto& ricipient : _users)
+	for (auto& recipient : _users)
 	{
-		if (ricipient->getLogin() != getActiveUser()->getLogin())
+		if (recipient->getLogin() != getActiveUser()->getLogin())
 		{
 			std::shared_ptr <Message> shp_mess(new Message(text, getActiveUser()->getName(),
-				                                         ricipient->getName(), str));
+				                                         recipient->getName(), str));
 			_messages.push_back(shp_mess);
 		}
 	}
-	
 }
 
 bool Chat::isLoginExist(const std::string& login)
@@ -102,7 +102,7 @@ std::shared_ptr<User> Chat::getActiveUser()
 
 void Chat::showMenuAddMessege()
 {
-	std::cout << "Choose ricipient mode : 1 - to One , 2 - to All, 3 - Exit \n";
+	std::cout << "Choose recipient mode : 1 - to One , 2 - to All, 3 - Exit \n";
 }
 
 std::shared_ptr<User> Chat::getUser(std::string login)
@@ -112,7 +112,6 @@ std::shared_ptr<User> Chat::getUser(std::string login)
 			return user;    
 		
 		return std::make_shared <User>();
-
 }
 
 void Chat::showAllUserMesseges(std::shared_ptr<User> shpu)
@@ -124,10 +123,9 @@ void Chat::showAllUserMesseges(std::shared_ptr<User> shpu)
 		if (shpu->getLogin() != "\0" && (shpu->getLogin() == message->getSender() ||
 			 shpu->getLogin() == message->getRecipient()))
 			std::cout << *message;
-		else std::cout << "Bad ricipient, choose right ricipient!\n";
+		else std::cout << "Bad recipient, choose right recipient!\n";
 		
 	}
-	
 }
 
 std::ostream& operator<< (std::ostream& os, Chat& ch)
