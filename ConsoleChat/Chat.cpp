@@ -1,6 +1,7 @@
 #include "Chat.h"
 #include <iostream>
 
+
 Chat::Chat()
 {
 
@@ -54,12 +55,12 @@ bool Chat::login(std::string login, std::string password)
 }
 
 
-void Chat::write(std::string text, std::shared_ptr<User>& recipient)
+void Chat::write(std::string text, std::shared_ptr<User> recipient)
 {
 	time_t time_mess = time(&time_mess);		
 	
-	std::shared_ptr <Message> shp_mess(new Message(text, getActiveUser().get()->getName(),
-		recipient.get()->getName(), time_mess));
+	std::shared_ptr <Message> shp_mess(new Message(text, getActiveUser()->getName(),
+		                                           recipient->getName(), time_mess));
 	_messages.push_back(shp_mess);	
 	
 }
@@ -69,11 +70,14 @@ void Chat::writeToAll(std::string text)
 	time_t time_mess = time(&time_mess);
 	
 	
-	for (auto ricipient : _users)
+	for (auto& ricipient : _users)
 	{
-		std::shared_ptr <Message> shp_mess(new Message(text, getActiveUser().get()->getName(),
-			(*ricipient).getName(), time_mess));
-		_messages.push_back(shp_mess);
+		if (ricipient->getLogin() != getActiveUser()->getLogin())
+		{
+			std::shared_ptr <Message> shp_mess(new Message(text, getActiveUser()->getName(),
+				                                         ricipient->getName(), time_mess));
+			_messages.push_back(shp_mess);
+		}
 	}
 	
 }
@@ -89,12 +93,50 @@ bool Chat::isLoginExist(const std::string& login)
 }
 
 std::shared_ptr<User> Chat::getActiveUser()
-{
+{	
 	return _activeUser;
 }
 
 void Chat::showMenuAddMessege()
 {
-	std::cout << "¬ыберите режим получател€ : 1 - одному , 2 - всем (All) \n";
+	std::cout << "Choose ricipient mode : 1 - to One , 2 - to All, 3 - Exit \n";
+}
+
+std::shared_ptr<User> Chat::getUser(std::string login)
+{
+	for (auto& user : _users)
+		if (user->getLogin() == login)				
+			return user;    
+		
+		return std::make_shared <User>();
+
+}
+
+void Chat::showAllUserMesseges(std::shared_ptr<User> shpu)
+{
+	std::cout << shpu->getName() << ", your all messages are : " << std::endl << std::endl;
+	
+	for (auto& message : _messages)
+	{
+		if (shpu->getLogin() != "\0" && (shpu->getLogin() == message->getSender() ||
+			 shpu->getLogin() == message->getRecipient()))
+			std::cout << *message;
+		else std::cout << "Bad ricipient, choose right ricipient!\n";
+		
+	}
+	
+}
+
+std::ostream& operator<< (std::ostream& os, Chat& ch)
+{
+	int count(0);
+	for (auto& user : ch._users)
+	{		
+		os << std::setw(3) << " < " << *user << " > ";
+		count++;
+		if (!(count % 6))
+			os << std::endl;
+	}
+	return os;
 }
 
