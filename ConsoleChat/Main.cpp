@@ -11,7 +11,7 @@ int main() {
 	std::cout << "create---------------" << std::endl;
 	chat->createNewUser("Irina", "@Irina", "12345");
 	chat->createNewUser("Roman", "@Roman", "67890");
-	chat->createNewUser("Irina", "IIrina", "23456");
+	chat->createNewUser("Irina", "@irina", "23456");
 	chat->createNewUser("Elena", "@Elena", "35467");
 	std::cout << "show------------" << std::endl;
 	chat->showActive();
@@ -30,9 +30,7 @@ int main() {
 	chat->showActive();
 
 	std::cout << std::endl;		
-
-	std::cout << "getNameByLogin : " << chat->getNameByLogin("IIrina");
-
+	
 	bool _true = true;
 	char choose;
 	while (_true)
@@ -42,41 +40,42 @@ int main() {
 		while (std::cin.get() != '\n')
 			continue;
 	    std::string message;
-		std::string ricipient;
+		std::string name_ricipient;
+		std::string log_ricipient;
 		switch (choose)
 		{
 		case '1':		
 		    {
-			std::cout << "You are : " << chat->getActiveUser()->getName() << std::endl;
+		    std::cout << "You are : " << chat->getActiveUser()->getName() << std::endl;
 			std::cout << "Choоse the ricipient: \n";
 			std::cout << *chat << std::endl;
-			std::getline (std::cin,ricipient);
-			if ((chat->getUser(ricipient)->getLogin()) == "\0")
-			{
-				std::cout << "bad ricipient, try again! \n";
-				continue;
-			}			
-			if (!chat->isUnicName(ricipient))
-			{
+			std::getline (std::cin,name_ricipient);
+			
+			if (!chat->isUnicName(name_ricipient)) // eсли имя не уникальное то проходим, нет - переходим на else
+			{			    
 			    std::cout << "The name is not unique, chose name by login list : \n";
 				chat->showAllLogin();
 				std::cout << std::endl;
 				std::string login_from_list;
 				std::getline(std::cin, login_from_list);
-				ricipient = chat->getNameByLogin(login_from_list);
-				if (ricipient=="\0")
-					break;
-			}
-			std::cout << "write a message\n";
-			std::getline(std::cin,message);
-			std::cout << std::endl;
-			chat->write(message, chat->getUser(ricipient));
-			time_t result = time(NULL);
-			char str[26];
-			ctime_s(str, sizeof str, &result);
-			std::cout << chat->getActiveUser()->getName() << std::setw(35) << str <<std::setw(30) 
+				log_ricipient = login_from_list;	
+				
+				
+			} else
+			   log_ricipient = chat->getLoginByName(name_ricipient);
+			   std::cout << std::endl;
+			   std::cout << "The logricipient is :" << log_ricipient << std::endl;
+			   std::cout << std::endl;
+			   std::cout << "write a message\n";
+			   std::getline(std::cin,message);
+			   std::cout << std::endl;
+			   chat->write(message, chat->getUser(log_ricipient));
+			   time_t result = time(NULL);
+			   char str[26];
+			   ctime_s(str, sizeof str, &result);
+			   std::cout << chat->getActiveUser()->getName() << std::setw(35) << str <<std::setw(30) 
 				<< "--->"<< std::setw(30)
-				<< ricipient << std::endl << std::endl << std::setw(15) << "\" " << message << " \""
+				<< chat->getNameByLogin(log_ricipient) << std::endl << std::endl << std::setw(15) << "\" " << message << " \""
 				<< std::endl << std::endl;
 		    }
 			continue;
@@ -110,13 +109,21 @@ int main() {
 		
 		_true = false;
 	}
-		
+	
+
+	
+
 	chat->showAllUserMesseges(chat->getActiveUser());
 		
 	std::cout << std::endl << std::endl;
 	
 	//std::cout << *chat << std::endl;
 	
+	std::cout << "showAllMesseges : \n";
+	
+	chat->showAllMessages();
+
+
 
 	delete chat;
 

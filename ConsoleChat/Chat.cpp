@@ -63,8 +63,8 @@ void Chat::write(std::string text, std::shared_ptr<User> recipient)
 	char str[26];
 	ctime_s(str, sizeof str, &result);
 	
-	std::shared_ptr <Message> shp_mess(new Message(text, getActiveUser()->getName(),
-		                                           recipient->getName(), str));
+	std::shared_ptr <Message> shp_mess(new Message(text, getActiveUser()->getLogin(),
+		                                           recipient->getLogin(), str));
 	_messages.push_back(shp_mess);	
 	
 }
@@ -79,8 +79,8 @@ void Chat::writeToAll(std::string text)
 	{
 		if (ricipient->getLogin() != getActiveUser()->getLogin())
 		{
-			std::shared_ptr <Message> shp_mess(new Message(text, getActiveUser()->getName(),
-				                                         ricipient->getName(), str));
+			std::shared_ptr <Message> shp_mess(new Message(text, getActiveUser()->getLogin(),
+				                                         ricipient->getLogin(), str));
 			_messages.push_back(shp_mess);
 		}
 	}
@@ -97,10 +97,10 @@ void Chat::showMenuAddMessege()
 	std::cout << "Choose ricipient mode : 1 - to One , 2 - to All, 3 - Exit \n";
 }
 
-std::shared_ptr<User> Chat::getUser(std::string name)
+std::shared_ptr<User> Chat::getUser(std::string login)
 {
 	for (auto& user : _users)
-		if (user->getName() == name)				
+		if (user->getLogin() == login)				
 			return user;    
 		
 		return std::make_shared <User>();
@@ -113,9 +113,15 @@ void Chat::showAllUserMesseges(std::shared_ptr<User> shpu)
 	
 	for (auto& message : _messages)
 	{
-		if (shpu->getLogin() != "\0" && (shpu->getName() == message->getSender() ||
-			 shpu->getName() == message->getRecipient()))
-			std::cout << *message;
+		if (shpu->getLogin() != "\0" && (shpu->getLogin() == message->getSender() ||
+			      (shpu->getLogin()) == message->getRecipient()))
+			//std::cout << *message;
+	std::cout << getNameByLogin(message->getSender()) << std::setw(35) << message->getTime() << std::setw(30) 
+			<< "--->" << std::setw(30) 
+			<< getNameByLogin(message->getRecipient()) << std::endl << std::endl << std::setw(20) << "\" " 
+			<< message->getText() << " \""
+			<< std::endl << std::endl;
+		
 		else std::cout << "Bad ricipient, choose right ricipient!\n";
 		
 	}
@@ -160,8 +166,9 @@ bool Chat::isUnicName(std::string name)
 			count++;
 	}
 	
-	if (count <= 1)
+	if (count == 1)
 		return true;
+	
 	else 
 		return false;
 
@@ -176,11 +183,23 @@ std::string Chat::getNameByLogin(std::string login)
 			return user->getName();
 
 	}
-			std::cout << "Login is not found!\n";
+			std::cout << "Name by " << login << " is not found!\n";
 			return "\0";		
 	
 }
 
+std::string Chat::getLoginByName(std::string name)
+{
+	for (auto& user : _users)
+	{
+
+		if (user->getName() == name)
+			return user->getLogin();
+
+	}
+	std::cout << "Login by " << name << "is not found!\n";
+	return "\0";
+}
 
 
 
