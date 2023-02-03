@@ -25,9 +25,9 @@ public:
 	bool login(std::string login, std::string password);
 	void write(std::string text, std::shared_ptr<User>);
 	void writeToAll(std::string text);
+	bool isLoginExist(const std::string& login);
 	std::shared_ptr <User> getActiveUser();
 	std::shared_ptr <User> getUser(std::string login);
-	void showMenuAddUser();
 	void showMenuAddMessege();
 	void showAllUserMesseges(std::shared_ptr <User>);
 	friend std::ostream& operator<< (std::ostream& os, Chat&);
