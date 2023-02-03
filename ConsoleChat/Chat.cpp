@@ -97,10 +97,10 @@ void Chat::showMenuAddMessege()
 	std::cout << "Choose ricipient mode : 1 - to One , 2 - to All, 3 - Exit \n";
 }
 
-std::shared_ptr<User> Chat::getUser(std::string login)
+std::shared_ptr<User> Chat::getUser(std::string name)
 {
 	for (auto& user : _users)
-		if (user->getLogin() == login)				
+		if (user->getName() == name)				
 			return user;    
 		
 		return std::make_shared <User>();
@@ -113,8 +113,8 @@ void Chat::showAllUserMesseges(std::shared_ptr<User> shpu)
 	
 	for (auto& message : _messages)
 	{
-		if (shpu->getLogin() != "\0" && (shpu->getLogin() == message->getSender() ||
-			 shpu->getLogin() == message->getRecipient()))
+		if (shpu->getLogin() != "\0" && (shpu->getName() == message->getSender() ||
+			 shpu->getName() == message->getRecipient()))
 			std::cout << *message;
 		else std::cout << "Bad ricipient, choose right ricipient!\n";
 		
@@ -134,4 +134,51 @@ std::ostream& operator<< (std::ostream& os, Chat& ch)
 	}
 	return os;
 }
+
+void Chat::showAllLogin()
+{
+	for (auto& user : _users)
+	{
+		int count(0);
+		std::cout << std::setw(3) << " < " << user->getLogin() << " > ";
+		count++;
+		if (!(count % 6))
+			std::cout << std::endl;
+	}
+
+}
+
+
+bool Chat::isUnicName(std::string name)
+{
+	int count(0);
+	
+	for (auto& user : _users)
+	{
+		
+		if (user->getName() == name)
+			count++;
+	}
+	
+	if (count <= 1)
+		return true;
+	else 
+		return false;
+
+}
+
+std::string Chat::getNameByLogin(std::string login)
+{
+	for (auto& user : _users)
+	{
+
+		if (user->getLogin() == login)
+			return user->getName();
+		else return "\0";
+	}
+}
+
+
+
+
 

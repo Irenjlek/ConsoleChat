@@ -31,6 +31,9 @@ public:
 	void showMenuAddMessege();
 	void showAllUserMesseges(std::shared_ptr <User>);
 	friend std::ostream& operator<< (std::ostream& os, Chat&);
+	void showAllLogin();
+	bool isUnicName(std::string name);
+	std::string getNameByLogin(std::string name);
 
 	//temp for debug
 	void showActive() {
