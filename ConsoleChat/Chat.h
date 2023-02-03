@@ -33,7 +33,9 @@ public:
 	friend std::ostream& operator<< (std::ostream& os, Chat&);
 	void showAllLogin();
 	bool isUnicName(std::string name);
-	std::string getNameByLogin(std::string name);
+	std::string getNameByLogin(std::string login);
+	std::string getLoginByName(std::string name);
+	bool isontheList(std::string name);
 
 	//temp for debug
 	void showActive() {
@@ -48,6 +50,21 @@ public:
 			std::cout << user->getName() << " " << std::endl;
 		}
 	}	
+
+	void showAllMessages()
+	{
+		
+
+		for (auto& shpm : _messages)
+		{
+			std::cout << shpm->getText();
+			std::cout << std::setw(30);
+			std::cout << shpm->getSender();
+			std::cout << std::setw(40);
+			std::cout << shpm->getRecipient();
+			std::cout << std::endl;
+		}
+	}
 
 };
 
