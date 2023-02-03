@@ -11,7 +11,7 @@ int main() {
 	std::cout << "create---------------" << std::endl;
 	chat->createNewUser("Irina", "@Irina", "12345");
 	chat->createNewUser("Roman", "@Roman", "67890");
-	chat->createNewUser("Irina", "@@Irina", "23456");
+	chat->createNewUser("Irina", "IIrina", "23456");
 	chat->createNewUser("Elena", "@Elena", "35467");
 	std::cout << "show------------" << std::endl;
 	chat->showActive();
@@ -30,6 +30,8 @@ int main() {
 	chat->showActive();
 
 	std::cout << std::endl;		
+
+	std::cout << "getNameByLogin : " << chat->getNameByLogin("IIrina");
 
 	bool _true = true;
 	char choose;
@@ -54,6 +56,17 @@ int main() {
 				std::cout << "bad ricipient, try again! \n";
 				continue;
 			}			
+			if (!chat->isUnicName(ricipient))
+			{
+			    std::cout << "The name is not unique, chose name by login list : \n";
+				chat->showAllLogin();
+				std::cout << std::endl;
+				std::string login_from_list;
+				std::getline(std::cin, login_from_list);
+				ricipient = chat->getNameByLogin(login_from_list);
+				if (ricipient=="\0")
+					break;
+			}
 			std::cout << "write a message\n";
 			std::getline(std::cin,message);
 			std::cout << std::endl;

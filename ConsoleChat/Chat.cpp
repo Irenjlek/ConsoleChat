@@ -174,8 +174,11 @@ std::string Chat::getNameByLogin(std::string login)
 
 		if (user->getLogin() == login)
 			return user->getName();
-		else return "\0";
+
 	}
+			std::cout << "Login is not found!\n";
+			return "\0";		
+	
 }
 
 
