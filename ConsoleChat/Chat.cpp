@@ -202,5 +202,14 @@ std::string Chat::getLoginByName(std::string name)
 }
 
 
-
+bool Chat::isontheList(std::string name)
+{
+	for (auto& tempname : _users)
+	{
+		if (tempname->getName() == name)
+			return true;
+	}
+	std::cout << "bad ricipient, try again!\n";
+	return false;
+}
 

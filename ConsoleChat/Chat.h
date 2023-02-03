@@ -35,6 +35,7 @@ public:
 	bool isUnicName(std::string name);
 	std::string getNameByLogin(std::string login);
 	std::string getLoginByName(std::string name);
+	bool isontheList(std::string name);
 
 	//temp for debug
 	void showActive() {
