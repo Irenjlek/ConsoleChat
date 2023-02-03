@@ -82,6 +82,17 @@ int main() {
 				std::cout << "bad recipient, try again! \n";
 				continue;
 			}			
+			if (!chat->isUnicName(recipient))
+			{
+			    std::cout << "The name is not unique, chose name by login list : \n";
+				chat->showAllLogin();
+				std::cout << std::endl;
+				std::string login_from_list;
+				std::getline(std::cin, login_from_list);
+				recipient = chat->getNameByLogin(login_from_list);
+				if (recipient=="\0")
+					break;
+			}
 			std::cout << "write a message\n";
 			std::getline(std::cin,message);
 			std::cout << std::endl;
