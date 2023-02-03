@@ -1,12 +1,16 @@
 #include "Message.h"
-#include <ostream>
+#include <iostream>
+#include <ctime>
 
-Message::Message(std::string text, std::string sender, std::string recipient, std::string time) :
+Message::Message(std::string text, std::string sender, std::string recipient) :
 	_text(text),
 	_sender(sender),
-	_recipient(recipient),
-	_time(time)
+	_recipient(recipient)
 {
+	time_t result = std::time(NULL);
+	char str[26];
+	ctime_s(str, sizeof str, &result);
+	_time = str;
 }
 
 std::string Message::getText()

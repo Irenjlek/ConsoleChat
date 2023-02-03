@@ -59,26 +59,19 @@ bool Chat::login(std::string login, std::string password)
 
 void Chat::write(std::string text, std::shared_ptr<User> recipient)
 {
-	time_t result = time(NULL);
-	char str[26];
-	ctime_s(str, sizeof str, &result);
 	std::shared_ptr <Message> shp_mess(new Message(text, getActiveUser()->getLogin(),
-		                                           recipient->getLogin(), str));
+		                                           recipient->getLogin()));
 	_messages.push_back(shp_mess);	
 }
 
 void Chat::writeToAll(std::string text)
 {
-	time_t result = time(NULL);
-	char str[26];
-	ctime_s(str, sizeof str, &result);	
-	
 	for (auto& recipient : _users)
 	{
 		if (recipient->getLogin() != getActiveUser()->getLogin())
 		{
 			std::shared_ptr <Message> shp_mess(new Message(text, getActiveUser()->getLogin(),
-				                                         recipient->getLogin(), str));
+				                                         recipient->getLogin()));
 			_messages.push_back(shp_mess);
 		}
 	}

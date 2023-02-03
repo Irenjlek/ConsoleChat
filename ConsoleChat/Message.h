@@ -14,7 +14,7 @@ private:
 	std::string _time;
 
 public:
-	Message(std::string text, std::string sender, std::string recipient, std::string time);
+	Message(std::string text, std::string sender, std::string recipient);
 
 	std::string getText();
 	std::string getSender();
