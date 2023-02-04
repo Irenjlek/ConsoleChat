@@ -52,7 +52,6 @@ bool Chat::login(std::string login, std::string password)
 			}
 		}
 	}
-	//showAllUserMesseges(_activeUser);
 	return true;
 }
 
