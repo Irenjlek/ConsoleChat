@@ -24,7 +24,7 @@ int main() {
 				std::string name, login, password;
 				std::cout << "Enter login" << std::endl;
 				std::cin >> login;
-				if (chat->isLoginExist(login))
+				if (chat->isLoginExist(login))				
 					break;
 				std::cout << "Enter password" << std::endl;
 				std::cin >> password;
@@ -38,20 +38,29 @@ int main() {
 				std::string login, password;
 				std::cout << "Enter login" << std::endl;
 				std::cin >> login;
-				if (!chat->isLoginExist(login)) {
+				if (!chat->isLoginExist(login)) 
+				{
 					std::cout << "User with login " << login << " does not exist." << std::endl;
 					break;
-				}
+				} 
 				std::cout << "Enter password" << std::endl;
 				std::cin >> password;
-				for (int i = 0; i < 3; i++) {
+				for (int i = 0; i < 3; i++) 
+				   {
 					if (chat->login(login, password))
-						break;
-					else if (i != 2) {
-						std::cout << "Enter password (" << 2 - i << " tries left)" << std::endl;
-						std::cin >> password;
-					}
-				}
+					   {
+						  std::cout << std::endl;
+						  chat->showAllUserMesseges(chat->getActiveUser());
+						  std::cout << std::endl;
+						  break;
+					    } 
+					    else if (i != 2) 
+						  {
+					    	std::cout << "Enter password (" << 2 - i << " tries left)" << std::endl;
+					    	std::cin >> password;
+					      }
+				   }			
+				
 				break;
 			}
 			case 'Q':
@@ -63,6 +72,7 @@ int main() {
 			}
 		}
 
+		
 		chat->showMenuAddMessege(); // 1 - One, 2 - All, 3 - Exit	    
 	    std::cin >> choose;
 		while (std::cin.get() != '\n')
@@ -138,5 +148,9 @@ int main() {
 		default: std::cout << "bad choose mode, try again! \n";
 			continue;
 		}
+
 	}
+
+	std::cout << "Done!";
+
 }

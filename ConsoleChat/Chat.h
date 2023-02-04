@@ -65,7 +65,19 @@ public:
 			std::cout << std::endl;
 		}
 	}
-
+	//template <typename T>
+	//bool isontheList(std::vector<T>, std::shared_ptr<std::string>);
 };
 
 
+//template <typename T>
+//bool isontheList(std::vector<T> vecshpr, std::shared_ptr<std::string> strshpr)
+//{
+//	for (auto& tempname : vecshpr)
+//	{
+//		if (tempname->getName() == name)
+//			return true;
+//	}
+//	std::cout << "bad element, try again!\n";
+//	return false;
+//}
