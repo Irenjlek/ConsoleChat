@@ -6,6 +6,7 @@
 #include "User.h"
 #include "Message.h"
 #include <iomanip>
+#include <typeinfo>
 
 class Chat
 {
@@ -65,19 +66,83 @@ public:
 			std::cout << std::endl;
 		}
 	}
-	//template <typename T>
-	//bool isontheList(std::vector<T>, std::shared_ptr<std::string>);
+	
+	std::vector<std::shared_ptr <User>> getVusers() const { return _users; }
+	std::vector<std::shared_ptr <Message>> getVmessages() const { return _messages; }
+		
+	
+	template <typename T>
+	bool isontheList(std::vector<T>, std::string Element, std::string fromElement);
 };
 
 
-//template <typename T>
-//bool isontheList(std::vector<T> vecshpr, std::shared_ptr<std::string> strshpr)
-//{
-//	for (auto& tempname : vecshpr)
-//	{
-//		if (tempname->getName() == name)
-//			return true;
-//	}
-//	std::cout << "bad element, try again!\n";
-//	return false;
-//}
+template <typename T>
+bool Chat::isontheList(std::vector<T> vecshptr, std::string Element, std::string fromElement)
+{
+
+	if (typeid(T).name() == typeid(std::shared_ptr<User>).name())
+	{
+		if (Element == "name")
+		{
+			for (auto& tempname : getVusers())
+			{
+				if (tempname->getName() == fromElement)
+					return true;
+			}
+			std::cout << "not : \"" << fromElement << "\" in the list \n";
+			return false;
+
+		}
+		else
+		{
+			std::cout << "bad element, try again!\n";
+			return false;
+		}
+
+		if (Element == "login")
+		{
+			for (auto& tempname : getVusers())
+			{
+				if (tempname->getLogin() == fromElement)
+					return true;
+			}
+			std::cout << "not : \"" << fromElement << "\" in the list \n";
+			return false;
+
+		}
+		else
+		{
+			std::cout << "bad element, try again!\n";
+			return false;
+		}
+	}
+
+	//else	
+	if (typeid(T).name() == typeid(std::shared_ptr<Message>).name())
+	{
+		if (Element == "text")
+		{
+			for (auto& tempelem : getVmessages())
+			{
+				if (tempelem->getText() == fromElement)
+					return true;
+			}
+			std::cout << "not : \" " << fromElement << "\" in the list \n";
+				return false;
+
+		}
+		else
+		{
+			std::cout << "bad element, try again!\n";
+			return false;
+		}
+
+		std::cout << "Nothing foud \n";
+
+		return false;
+
+	}
+	//else return false;
+}
+ 
+ 

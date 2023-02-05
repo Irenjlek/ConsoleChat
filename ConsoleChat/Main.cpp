@@ -140,6 +140,14 @@ int main() {
 		
 		case '3':
 		    {
+			
+			if (chat->isontheList(chat->getVusers(), "name", "Roman"))
+				std::cout << "Ura! isontheList found Roman! \n";
+			else std::cout << "Nothing not found! \n";
+			if (chat->isontheList(chat->getVmessages(), "text","Roman to Roman"))
+				std::cout << "Ura! isontheList found \"Roman to Roman\"! \n";
+			else std::cout << "Nothing not found! \n";
+			
 			std::cout << "Exit! \n";
 			chat->setActiveUser(nullptr);
 			break;
@@ -151,6 +159,8 @@ int main() {
 
 	}
 
+	std::shared_ptr<Chat> chat2 = std::shared_ptr<Chat>(new Chat());
+	
 	std::cout << "Done!";
 
 }
