@@ -1,6 +1,6 @@
 #pragma once
 #include <ostream>
-#include <string>;
+#include <string>
 
 class User
 {

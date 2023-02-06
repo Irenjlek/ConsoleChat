@@ -24,8 +24,10 @@ int main() {
 				std::string name, login, password;
 				std::cout << "Enter login" << std::endl;
 				std::cin >> login;
-				if (chat->isLoginExist(login))
+				if (chat->isLoginExist(login)) {
+					std::cout << "User with login " << login << " is already exists." << std::endl;
 					break;
+				}					
 				std::cout << "Enter password" << std::endl;
 				std::cin >> password;
 				std::cout << "Enter name" << std::endl;
@@ -38,20 +40,29 @@ int main() {
 				std::string login, password;
 				std::cout << "Enter login" << std::endl;
 				std::cin >> login;
-				if (!chat->isLoginExist(login)) {
+				if (!chat->isLoginExist(login)) 
+				{
 					std::cout << "User with login " << login << " does not exist." << std::endl;
 					break;
-				}
+				} 
 				std::cout << "Enter password" << std::endl;
 				std::cin >> password;
-				for (int i = 0; i < 3; i++) {
+				for (int i = 0; i < 3; i++) 
+				   {
 					if (chat->login(login, password))
-						break;
-					else if (i != 2) {
-						std::cout << "Enter password (" << 2 - i << " tries left)" << std::endl;
-						std::cin >> password;
-					}
-				}
+					   {
+						  std::cout << std::endl;
+						  chat->showAllUserMesseges(chat->getActiveUser());
+						  std::cout << std::endl;
+						  break;
+					    } 
+					    else if (i != 2) 
+						  {
+					    	std::cout << "Enter password (" << 2 - i << " tries left)" << std::endl;
+					    	std::cin >> password;
+					      }
+				   }			
+				
 				break;
 			}
 			case 'Q':
@@ -63,6 +74,7 @@ int main() {
 			}
 		}
 
+		
 		chat->showMenuAddMessege(); // 1 - One, 2 - All, 3 - Exit	    
 	    std::cin >> choose;
 		while (std::cin.get() != '\n')
@@ -130,6 +142,14 @@ int main() {
 		
 		case '3':
 		    {
+			std::cout << "Don't worry this is only the test of the template isonthelist(): \n";
+			if (chat->isontheList(chat->getVusers(), "name", "Roman"))
+				std::cout << "Ura! isontheList found Roman! \n";
+			else std::cout << "In _users Nothing not found! \n";
+			if (chat->isontheList(chat->getVmessages(), "text","Roman to Roman"))
+				std::cout << "Ura! isontheList found \"Roman to Roman\"! \n";
+			else std::cout << "In messages Nothing not found! \n";
+			std::cout << "end the test and moving on the main part of the programm...\n";
 			std::cout << "Exit! \n";
 			chat->setActiveUser(nullptr);
 			break;
@@ -138,5 +158,11 @@ int main() {
 		default: std::cout << "bad choose mode, try again! \n";
 			continue;
 		}
+
 	}
+
+	//std::shared_ptr<Chat> chat2 = std::shared_ptr<Chat>(new Chat());
+	
+	std::cout << "Done!";
+
 }
