@@ -15,9 +15,12 @@ int main() {
 	{
 		while (chat->getActiveUser() == nullptr) {
 			std::cout << "Would you like login(enter 'L'), register(enter 'R') or quit(enter 'Q')?" << std::endl;
-			char selection;
+			std::string selection;
 			std::cin >> selection;
-			switch (selection)
+			if (selection.size() > 1) {
+				std::cout << "I think you mean '" << selection.at(0) << "'" << std::endl;
+			}
+			switch (selection.at(0))
 			{
 			case 'R':
 			{
