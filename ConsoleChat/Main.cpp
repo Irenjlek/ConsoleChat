@@ -24,8 +24,10 @@ int main() {
 				std::string name, login, password;
 				std::cout << "Enter login" << std::endl;
 				std::cin >> login;
-				if (chat->isLoginExist(login))				
+				if (chat->isLoginExist(login)) {
+					std::cout << "User with login " << login << " is already exists." << std::endl;
 					break;
+				}					
 				std::cout << "Enter password" << std::endl;
 				std::cin >> password;
 				std::cout << "Enter name" << std::endl;
