@@ -1,6 +1,7 @@
 #include "Chat.h"
+#include "BadLogin.h"
+#include "BadPassword.h"
 #include <iostream>
-
 
 Chat::Chat()
 {
@@ -32,13 +33,11 @@ void Chat::setActiveUser(const std::shared_ptr<User>& user)
 	_activeUser = user;
 }
 
-bool Chat::login(std::string login, std::string password)
+void Chat::login(std::string login, std::string password)
 {
 	bool found = isLoginExist(login);
-	if (!found) {
-		std::cout << "User with login " << login << " does not exist." << std::endl;
-		return false;
-	}
+	if (!found)
+		throw BadLogin();
 
 	for (std::shared_ptr <User> user : _users)
 	{
@@ -46,14 +45,11 @@ bool Chat::login(std::string login, std::string password)
 			if (user->getPassword() == password) {
 				setActiveUser(std::make_shared<User>(*user));
 			}
-			else {
-				std::cout << "Password is incorrect." << std::endl;
-				return false;
-			}
+			else
+				throw BadPassword();
 		}
 	}
 	showAllUserMesseges(_activeUser);
-	return true;
 }
 
 

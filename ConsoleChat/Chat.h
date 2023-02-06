@@ -22,7 +22,7 @@ public:
 
 	bool createNewUser(const std::string& name, const std::string& login, const std::string& password);
 	void setActiveUser(const std::shared_ptr<User>& user);
-	bool login(std::string login, std::string password);
+	void login(std::string login, std::string password);
 	void write(std::string text, std::shared_ptr<User>);
 	void writeToAll(std::string text);
 	bool isLoginExist(const std::string& login);
