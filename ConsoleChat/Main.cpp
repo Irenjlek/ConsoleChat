@@ -65,6 +65,7 @@ int main() {
 					}
 					break;
 				}
+				break;
 			}
 			case 'Q':
 				std::cout << "Good luck, bye!" << std::endl;
