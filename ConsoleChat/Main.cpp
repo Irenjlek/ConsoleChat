@@ -1,6 +1,8 @@
 #include "Chat.h"
 #include "Message.h"
 #include "User.h"
+#include "BadLogin.h"
+#include "BadPassword.h"
 #include <iostream>
 #include <ctime>
 
@@ -43,29 +45,37 @@ int main() {
 				std::string login, password;
 				std::cout << "Enter login" << std::endl;
 				std::cin >> login;
-				if (!chat->isLoginExist(login)) 
-				{
-					std::cout << "User with login " << login << " does not exist." << std::endl;
-					break;
-				} 
 				std::cout << "Enter password" << std::endl;
 				std::cin >> password;
-				for (int i = 0; i < 3; i++) 
-				   {
-					if (chat->login(login, password))
-					   {
-						  std::cout << std::endl;
-						  chat->showAllUserMesseges(chat->getActiveUser());
-						  std::cout << std::endl;
-						  break;
-					    } 
-					    else if (i != 2) 
-						  {
-					    	std::cout << "Enter password (" << 2 - i << " tries left)" << std::endl;
-					    	std::cin >> password;
-					      }
-				   }			
-				
+				int tries = 3;
+
+				try {
+					chat->login(login, password);
+					std::cout << std::endl;
+					chat->showAllUserMesseges(chat->getActiveUser());
+					std::cout << std::endl;
+				}
+				catch (BadLogin& e) {
+					std::cout << e.what() << std::endl;
+					break;
+				}
+				catch (BadPassword& e) {
+					std::cout << e.what() << std::endl;
+					while (--tries > 0) {
+						try {
+							std::cout << "Enter password (" << tries << " tries left)" << std::endl;
+							std::cin >> password;
+							chat->login(login, password);
+							std::cout << std::endl;
+							chat->showAllUserMesseges(chat->getActiveUser());
+							std::cout << std::endl;
+						}
+						catch (BadPassword& e) {
+							std::cout << e.what() << std::endl;
+						}
+					}
+					break;
+				}
 				break;
 			}
 			case 'Q':
@@ -77,7 +87,6 @@ int main() {
 			}
 		}
 
-		
 		chat->showMenuAddMessege(); // 1 - One, 2 - All, 3 - Exit	    
 	    std::cin >> choose;
 		while (std::cin.get() != '\n')
