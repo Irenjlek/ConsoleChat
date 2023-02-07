@@ -17,17 +17,22 @@ int main() {
 	{
 		while (chat->getActiveUser() == nullptr) {
 			std::cout << "Would you like login(enter 'L'), register(enter 'R') or quit(enter 'Q')?" << std::endl;
-			char selection;
+			std::string selection;
 			std::cin >> selection;
-			switch (selection)
+			if (selection.size() > 1) {
+				std::cout << "I think you mean '" << selection.at(0) << "'" << std::endl;
+			}
+			switch (selection.at(0))
 			{
 			case 'R':
 			{
 				std::string name, login, password;
 				std::cout << "Enter login" << std::endl;
 				std::cin >> login;
-				if (chat->isLoginExist(login))
+				if (chat->isLoginExist(login)) {
+					std::cout << "User with login " << login << " is already exists." << std::endl;
 					break;
+				}					
 				std::cout << "Enter password" << std::endl;
 				std::cin >> password;
 				std::cout << "Enter name" << std::endl;
@@ -46,6 +51,9 @@ int main() {
 
 				try {
 					chat->login(login, password);
+					std::cout << std::endl;
+					chat->showAllUserMesseges(chat->getActiveUser());
+					std::cout << std::endl;
 				}
 				catch (BadLogin& e) {
 					std::cout << e.what() << std::endl;
@@ -58,6 +66,9 @@ int main() {
 							std::cout << "Enter password (" << tries << " tries left)" << std::endl;
 							std::cin >> password;
 							chat->login(login, password);
+							std::cout << std::endl;
+							chat->showAllUserMesseges(chat->getActiveUser());
+							std::cout << std::endl;
 						}
 						catch (BadPassword& e) {
 							std::cout << e.what() << std::endl;
@@ -143,6 +154,14 @@ int main() {
 		
 		case '3':
 		    {
+			std::cout << "Don't worry this is only the test of the template isonthelist(): \n";
+			if (chat->isontheList(chat->getVusers(), "name", "Roman"))
+				std::cout << "Ura! isontheList found Roman! \n";
+			else std::cout << "In _users Nothing not found! \n";
+			if (chat->isontheList(chat->getVmessages(), "text","Roman to Roman"))
+				std::cout << "Ura! isontheList found \"Roman to Roman\"! \n";
+			else std::cout << "In messages Nothing not found! \n";
+			std::cout << "end the test and moving on the main part of the programm...\n";
 			std::cout << "Exit! \n";
 			chat->setActiveUser(nullptr);
 			break;
@@ -151,5 +170,11 @@ int main() {
 		default: std::cout << "bad choose mode, try again! \n";
 			continue;
 		}
+
 	}
+
+	//std::shared_ptr<Chat> chat2 = std::shared_ptr<Chat>(new Chat());
+	
+	std::cout << "Done!";
+
 }

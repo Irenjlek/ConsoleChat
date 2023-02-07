@@ -43,13 +43,12 @@ void Chat::login(std::string login, std::string password)
 	{
 		if (user->getLogin() == login) {
 			if (user->getPassword() == password) {
-				setActiveUser(std::make_shared<User>(*user));
+				setActiveUser(user);            //    (std::make_shared<User>(*user));
 			}
 			else
 				throw BadPassword();
 		}
 	}
-	showAllUserMesseges(_activeUser);
 }
 
 
@@ -108,18 +107,25 @@ void Chat::showAllUserMesseges(std::shared_ptr<User> shpu)
 	
 	for (auto& message : _messages)
 	{
-		if (shpu->getLogin() != "\0" && (shpu->getLogin() == message->getSender() ||
-			      (shpu->getLogin()) == message->getRecipient()))
-			//std::cout << *message;
-	std::cout << getNameByLogin(message->getSender()) << std::setw(35) << message->getTime() << std::setw(30) 
-			<< "--->" << std::setw(30) 
-			<< getNameByLogin(message->getRecipient()) << std::endl << std::endl << std::setw(20) << "\" " 
-			<< message->getText() << " \""
-			<< std::endl << std::endl;
+		if (shpu->getLogin() == "\0")
+		{
+			std::cout << "Bad recipient, choose right recipient!\n";
+			return;
+		} 
 		
-		else std::cout << "Bad recipient, choose right recipient!\n";
+		else if  (shpu->getLogin() == message->getSender() || (shpu->getLogin()) == message->getRecipient())
+		{
+			std::cout << getNameByLogin(message->getSender()) << std::setw(35) << message->getTime() << std::setw(30)
+				<< "--->" << std::setw(30)
+				<< getNameByLogin(message->getRecipient()) << std::endl << std::endl << std::setw(20) << "\" "
+				<< message->getText() << " \""
+				<< std::endl << std::endl;
+
+		}
+		
 		
 	}
+	
 }
 
 std::ostream& operator<< (std::ostream& os, Chat& ch)
