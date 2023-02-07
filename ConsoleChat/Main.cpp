@@ -112,8 +112,10 @@ int main() {
 			    	chat->showAllLogin();
 			    	std::cout << std::endl;
 	     		  	std::string login_from_list;
-	    			std::getline(std::cin, login_from_list);
-	     			log_recipient = login_from_list;	
+	    			std::getline(std::cin, login_from_list);	     			
+					if (!(chat->isontheList(chat->getNameByLogin(login_from_list))))
+						continue;
+					log_recipient = login_from_list;	
 				
 				
 	    		} else
