@@ -80,26 +80,43 @@ Homework for skillfactory first module c++
 класс Chat
 - объявление и реализация следующих функций:
 
-    void write(std::string text, std::shared_ptr<User>) (сообщение одному)  
-	void writeToAll(std::string text) 	            
-	std::shared_ptr <User> getUser(std::string login) 
+    void write(std::string text, std::shared_ptr<User>) (сообщение одному)
+	
+	void writeToAll(std::string text)
+	
+	std::shared_ptr <User> getUser(std::string login)
+	
 	void showMenuAddMessege() 
+	
 	void showAllUserMesseges(std::shared_ptr <User>) 
+	
 	friend std::ostream& operator<< (std::ostream& os, Chat&) (имена всех пользователей)
+	
 	void showAllLogin() 
+	
 	bool isUnicName(std::string name) 
+	
 	std::string getNameByLogin(std::string login) 
+	
 	std::string getLoginByName(std::string name) 
-	bool isontheList(std::string name) (имя пользователя в списке)		
+	
+	bool isontheList(std::string name) (имя пользователя в списке)	
+	
 	void showAllMessages() 	(по пользователю)
+	
 	std::vector<std::shared_ptr <User>> getVusers() const 
+	
 	std::vector<std::shared_ptr <Message>> getVmessages() const 
-	template <typename T>
+	
+	template <typename T>	
+	
 	bool isontheList(std::vector<T>, std::string Element, std::string fromElement) 
+	
         (поиск в элементах классa T) 
         
 
 функция main() :
   
   - меню "Choose recipient mode : 1 - to One , 2 - to All, 3 - Exit \n"  
+  
     полный цикл (строки с 90 по 174) 
