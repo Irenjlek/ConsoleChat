@@ -47,7 +47,7 @@ Homework for skillfactory first module c++
 
 все файлы диаграмм 
 
-класс User 
+класс Message 
 - объявление и реализация
 
 класс Chat
@@ -85,7 +85,7 @@ Homework for skillfactory first module c++
 
 файл README
 
-класс Messages 
+класс User 
 - объявление и реализация
 
 класс Chat
