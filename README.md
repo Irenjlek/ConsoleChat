@@ -48,12 +48,18 @@ Homework for skillfactory first module c++
 класс Chat
 - объявление и реализация следующих функций:
 
-  bool createNewUser(const std::string& name, const std::string& login, const std::string& password) 
+  bool createNewUser(const std::string& name, const std::string& login, const std::string& password)
+  
   void setActiveUser(const std::shared_ptr<User>& user) 
+  
   void login(std::string login, std::string password) 
+  
   bool isLoginExist(const std::string& login) 
+  
   shared_ptr <User> getActiveUser() 
+  
   void showActive() - (имя активного пользователя)
+  
   void showAll() - (все имена пользователей)
 
 класс Badlogin
